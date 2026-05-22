@@ -18,10 +18,32 @@ html{scroll-behavior:smooth;}
   --dim:rgba(255,255,255,.25);--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden;}
+
+/* ─── AURORA BG ─── */
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 15% 20%, rgba(255,23,68,.13) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 85% 75%, rgba(0,229,255,.10) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(255,23,68,.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 70% 10%, rgba(0,229,255,.07) 0%, transparent 50%);
+  animation: aurora 12s ease-in-out infinite alternate;
+}
+@keyframes aurora {
+  0%   { opacity:.7; transform: scale(1) rotate(0deg); }
+  33%  { opacity:1;  transform: scale(1.04) rotate(.5deg); }
+  66%  { opacity:.8; transform: scale(.97) rotate(-.3deg); }
+  100% { opacity:1;  transform: scale(1.02) rotate(.2deg); }
+}
 .bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:56px 56px;}
-.bg-orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;}
-.bg-orb-1{width:480px;height:480px;background:rgba(255,23,68,.07);top:-120px;right:-80px;}
-.bg-orb-2{width:360px;height:360px;background:rgba(0,229,255,.05);bottom:-80px;left:-60px;}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
+.bg-orb-1{width:600px;height:600px;background:rgba(255,23,68,.11);top:-180px;right:-100px;animation:orb1 10s ease-in-out infinite alternate;}
+.bg-orb-2{width:500px;height:500px;background:rgba(0,229,255,.09);bottom:-120px;left:-80px;animation:orb2 13s ease-in-out infinite alternate;}
+.bg-orb-3{width:300px;height:300px;background:rgba(0,229,255,.06);top:40%;left:50%;transform:translateX(-50%);animation:orb3 8s ease-in-out infinite alternate;}
+@keyframes orb1{0%{transform:translate(0,0) scale(1);}100%{transform:translate(-40px,30px) scale(1.1);}}
+@keyframes orb2{0%{transform:translate(0,0) scale(1);}100%{transform:translate(30px,-40px) scale(1.12);}}
+@keyframes orb3{0%{transform:translateX(-50%) scale(1);opacity:.6;}100%{transform:translateX(-50%) scale(1.3);opacity:1;}}
 
 /* PARTICLES CANVAS */
 #particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .5s;}
@@ -188,8 +210,9 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.25);box-shadow:0
 .cta-title{font-size:clamp(20px,4vw,28px);font-weight:800;line-height:1.2;margin-bottom:10px;letter-spacing:-.5px;}
 .cta-sub{font-size:14px;color:var(--muted);max-width:440px;margin:0 auto 30px;line-height:1.6;}
 .cta-sub b{color:var(--text);}
-.btn-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--red);color:#fff;font-size:17px;font-weight:700;padding:20px 44px;border-radius:12px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 0 40px var(--red-glow);transition:transform .15s,box-shadow .15s;animation:pulsebtn 2.5s infinite;width:100%;max-width:440px;}
+.btn-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--red);color:#fff;font-size:17px;font-weight:700;padding:18px 32px;border-radius:12px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 0 40px var(--red-glow);transition:transform .15s,box-shadow .15s;animation:pulsebtn 2.5s infinite;width:100%;max-width:440px;}
 .btn-cta:hover{transform:translateY(-3px);box-shadow:0 0 70px rgba(255,23,68,.75);}
+@media(max-width:600px){.btn-cta{font-size:15px;padding:16px 20px;gap:8px;}}
 .cta-trust{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:20px;flex-wrap:wrap;}
 .trust-item{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--muted);}
 .trust-dot{width:5px;height:5px;border-radius:50%;background:var(--green);}
@@ -212,6 +235,7 @@ footer a:hover{color:var(--text);}
 <div class="bg-grid"></div>
 <div class="bg-orb bg-orb-1"></div>
 <div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
 <canvas id="particles-canvas"></canvas>
 
 <div class="wrap">
@@ -261,7 +285,7 @@ footer a:hover{color:var(--text);}
           <span class="ilabel-text">Ticket promedio del tratamiento más vendido</span>
           <output class="ilabel-val" id="o-ticket">$500</output>
         </div>
-        <input id="s-ticket" type="range" min="100" max="5000" step="50" value="500">
+        <input id="s-ticket" type="range" min="50" max="5000" step="50" value="500">
       </div>
       <div class="irow">
         <div class="ilabel" style="margin-bottom:14px;">
@@ -445,8 +469,8 @@ footer a:hover{color:var(--text);}
       <div class="cta-title">Recuperá <span id="r-cta-amount" style="color:var(--red)">$0</span> extra<br>a partir del próximo mes.</div>
       <p class="cta-sub">Agendá tu <b>Auditoría Gratuita de 10 minutos</b> y te mostramos exactamente cómo el Sistema SAAIA recupera ese dinero en tu clínica — sin compromiso.</p>
       <a href="https://calendly.com/claudiocaf87/consultoria" target="_blank" rel="noopener noreferrer" class="btn-cta">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
-        Quiero recuperar ese dinero → Agendar ahora
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+        Quiero dejar de perder dinero →
       </a>
       <div class="cta-trust">
         <span class="trust-item"><span class="trust-dot"></span> Sin compromiso</span>
